@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const Formulario = () => {
+const Formulario = ({ pacientes, setPacientes }) => {
   const [ nombre, setNombre ] = useState('');
   const [ propietario, setPropietario ] = useState('');
   const [ email, setEmail ] = useState('');
@@ -20,6 +20,25 @@ const Formulario = () => {
     }
 
     setError(false);
+
+    // Objeto Paciente
+    const objetoPaciente = {
+      nombre,
+      propietario,
+      email,
+      fecha,
+      sintomas
+    }
+
+    // pasar el objeto al componente ppal
+    setPacientes([...pacientes, objetoPaciente]);
+
+    // reiniciar el formulario
+    useState('');
+    useState('');
+    useState('');
+    useState('');
+    useState('');
   }
 
 
