@@ -13,7 +13,6 @@ const ListadoPacientes = ({pacientes}) => {
         <Paciente paciente={paciente} />
         )
       ) }
-      <Paciente />
     </div>
   );
 };
