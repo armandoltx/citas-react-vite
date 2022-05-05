@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Formulario from './components/Formulario';
 import ListadoPacientes from './components/ListadoPacientes';
@@ -7,6 +7,25 @@ function App() {
 
   const [pacientes, setPacientes] = useState([]);
   const [paciente, setPaciente] = useState({});
+
+  // el ordern de los useEffect es imporante pq se ejecutan en orden
+
+  useEffect(() => {
+    const obtenerLs = () => {
+      const pacientesLS = JSON.parse(localStorage.getItem('pacientes')) ?? [];
+      // console.log(pacientesLS);
+      setPacientes(pacientesLS);
+
+    }
+
+    obtenerLs();
+  },[]) // cuando pasas un array vacio, es para q se ejecute una sola vez
+
+  useEffect(() => {
+    // console.log('Componente Listo o cambio pacientes');
+
+    localStorage.setItem('pacientes', JSON.stringify( pacientes ));
+  }, [pacientes])
 
   const eliminarPaciente = (id) => {
     // console.log('Eliminando el paciente ', id);
