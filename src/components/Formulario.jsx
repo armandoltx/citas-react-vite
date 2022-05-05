@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Error from './Error';
 
-const Formulario = ({ pacientes, setPacientes, paciente }) => {
+const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
   const [ nombre, setNombre ] = useState('');
   const [ propietario, setPropietario ] = useState('');
   const [ email, setEmail ] = useState('');
@@ -44,12 +44,30 @@ const Formulario = ({ pacientes, setPacientes, paciente }) => {
       propietario,
       email,
       fecha,
-      sintomas,
-      id: generarId()
+      sintomas
     }
 
-    // pasar el objeto al componente ppal
-    setPacientes([...pacientes, objetoPaciente]);
+    if(paciente.id) {
+      // Editando el registro de paciente
+
+      objetoPaciente.id = paciente.id
+
+      // console.log(objetoPaciente);
+      // console.log(paciente);
+
+      // Creamos un array nuevo con los pacientes q estan y el que hemos editado, iteramos entre todos los pacientes y agregamos todos los q no tocamos mas el que hemos editado.
+      const pacientesActualizados = pacientes.map( pacienteState => pacienteState.id === paciente.id ? objetoPaciente : pacienteState );
+
+      setPacientes(pacientesActualizados);
+      setPaciente({});
+
+    } else {
+      // Nuevo registro de paciente
+      // pasar el objeto al componente ppal
+      objetoPaciente.id = generarId();
+      setPacientes([...pacientes, objetoPaciente]);
+    }
+
 
     // reiniciar el formulario
     useState('');
